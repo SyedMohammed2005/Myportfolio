@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Custom Keyframe Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0px);
+  }
+}
+
+/* Animation Utilities */
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 5.5s ease-in-out infinite 1.2s;
+}
+
+.animate-blink {
+  animation: blink 0.95s step-end infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Webkit Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #040407;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0d0d15;
+  border-radius: 4px;
+  border: 2px solid #040407;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 210, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #07070a;
+}
+
+/* Micro Font Overrides */
+h1, h2, h3, h4, button {
+  font-family: var(--font-display), var(--font-sans);
+}
+
+pre, code, .font-mono {
+  font-family: var(--font-mono), monospace;
+}
