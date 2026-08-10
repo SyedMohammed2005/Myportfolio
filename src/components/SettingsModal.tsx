@@ -23,7 +23,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { Project, Skill } from '../types';
-import developerPortrait from '../assets/images/developer_portrait_1786375098962.jpg';
+import developerPortrait from '../assets/images/mdportfolio.jpeg';
 
 interface SettingsModalProps {
   isOpen: boolean;
