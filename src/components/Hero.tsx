@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Mail, ArrowRight, Eye, Terminal, Database, Code, Cpu } from 'lucide-react';
 import { usePortfolio } from '../context/PortfolioContext';
-import developerPortrait from '../assets/images/developer_portrait_1786375098962.jpg';
+import developerPortrait from '../assets/images/mdportfolio.jpeg';
 import ResumeModal from './ResumeModal';
 
 export default function Hero() {
