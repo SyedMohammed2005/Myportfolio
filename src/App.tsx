@@ -7,9 +7,14 @@ import AboutSkills from './components/AboutSkills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import SettingsModal from './components/SettingsModal';
+import { PortfolioProvider, usePortfolio } from './context/PortfolioContext';
 
-export default function App() {
+function MainAppContent() {
   const [activeSection, setActiveSection] = useState('home');
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const { theme } = usePortfolio();
+  const isLight = theme === 'light';
 
   useEffect(() => {
     const sectionIds = ['home', 'about', 'skills', 'projects', 'contact'];
@@ -47,13 +52,17 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#07070a] text-white font-sans overflow-x-hidden selection:bg-cyan-500/30 selection:text-white">
+    <div className={`relative min-h-screen font-sans overflow-x-hidden transition-colors duration-300 ${
+      isLight
+        ? 'bg-white text-slate-900 selection:bg-cyan-500/20 selection:text-slate-900'
+        : 'bg-[#07070a] text-white selection:bg-cyan-500/30 selection:text-white'
+    }`}>
       
       {/* Background Interactive Google AI Studio Style Grid Canvas */}
       <AIStudioGrid />
 
       {/* Glassmorphic Navbar */}
-      <Navbar activeSection={activeSection} />
+      <Navbar activeSection={activeSection} onOpenSettings={() => setIsSettingsOpen(true)} />
 
       {/* App Content wrapper */}
       <main className="relative z-10">
@@ -103,6 +112,18 @@ export default function App() {
       {/* Cybernetic Footer */}
       <Footer />
 
+      {/* Settings / Admin Management Modal */}
+      <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+
     </div>
   );
 }
+
+export default function App() {
+  return (
+    <PortfolioProvider>
+      <MainAppContent />
+    </PortfolioProvider>
+  );
+}
+

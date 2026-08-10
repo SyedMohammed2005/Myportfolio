@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { usePortfolio } from '../context/PortfolioContext';
 
 export default function AIStudioGrid() {
+  const { theme } = usePortfolio();
+  const isLight = theme === 'light';
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: -1000, y: -1000, targetX: -1000, targetY: -1000, active: false });
@@ -71,7 +74,9 @@ export default function AIStudioGrid() {
       if (streaks.length >= 15) return; // Limit total concurrent streaks
 
       const isHorizontal = Math.random() > 0.5;
-      const color = Math.random() > 0.4 ? 'rgba(0, 210, 255, 0.4)' : 'rgba(139, 92, 246, 0.4)'; // Cyan or Purple
+      const color = isLight
+        ? (Math.random() > 0.4 ? 'rgba(2, 132, 199, 0.5)' : 'rgba(124, 58, 237, 0.5)')
+        : (Math.random() > 0.4 ? 'rgba(0, 210, 255, 0.4)' : 'rgba(139, 92, 246, 0.4)');
       
       if (isHorizontal) {
         const totalRows = Math.floor(height / gridSize);
@@ -85,7 +90,7 @@ export default function AIStudioGrid() {
           speed: (1.5 + Math.random() * 2.5) * direction,
           length: 80 + Math.random() * 120,
           color,
-          alpha: 0.15 + Math.random() * 0.25,
+          alpha: isLight ? 0.25 + Math.random() * 0.35 : 0.15 + Math.random() * 0.25,
         });
       } else {
         const totalCols = Math.floor(width / gridSize);
@@ -99,7 +104,7 @@ export default function AIStudioGrid() {
           speed: (1.5 + Math.random() * 2.5) * direction,
           length: 80 + Math.random() * 120,
           color,
-          alpha: 0.15 + Math.random() * 0.25,
+          alpha: isLight ? 0.25 + Math.random() * 0.35 : 0.15 + Math.random() * 0.25,
         });
       }
     };
@@ -123,11 +128,11 @@ export default function AIStudioGrid() {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Draw absolute dark background
-      ctx.fillStyle = '#07070a';
+      // Canvas background depending on theme
+      ctx.fillStyle = isLight ? '#ffffff' : '#07070a';
       ctx.fillRect(0, 0, width, height);
 
-      // Smoothly interpolate mouse position for a premium, delayed dragging effect
+      // Smoothly interpolate mouse position for a delayed dragging effect
       const mouse = mouseRef.current;
       if (mouse.active) {
         if (mouse.x === -1000) {
@@ -142,13 +147,18 @@ export default function AIStudioGrid() {
         mouse.y += (-1000 - mouse.y) * 0.12;
       }
 
-      // Draw faint background radial ambient lights (Google AI Studio aesthetic)
-      const numGlows = 3;
-      const glows = [
-        { x: width * 0.2, y: height * 0.3, r: Math.min(width, height) * 0.5, c: 'rgba(0, 210, 255, 0.025)' },
-        { x: width * 0.8, y: height * 0.7, r: Math.min(width, height) * 0.6, c: 'rgba(139, 92, 246, 0.02)' },
-        { x: width * 0.5, y: height * 0.5, r: Math.min(width, height) * 0.4, c: 'rgba(16, 185, 129, 0.015)' },
-      ];
+      // Radial ambient lights
+      const glows = isLight
+        ? [
+            { x: width * 0.2, y: height * 0.3, r: Math.min(width, height) * 0.5, c: 'rgba(14, 165, 233, 0.05)' },
+            { x: width * 0.8, y: height * 0.7, r: Math.min(width, height) * 0.6, c: 'rgba(168, 85, 247, 0.04)' },
+            { x: width * 0.5, y: height * 0.5, r: Math.min(width, height) * 0.4, c: 'rgba(16, 185, 129, 0.03)' },
+          ]
+        : [
+            { x: width * 0.2, y: height * 0.3, r: Math.min(width, height) * 0.5, c: 'rgba(0, 210, 255, 0.025)' },
+            { x: width * 0.8, y: height * 0.7, r: Math.min(width, height) * 0.6, c: 'rgba(139, 92, 246, 0.02)' },
+            { x: width * 0.5, y: height * 0.5, r: Math.min(width, height) * 0.4, c: 'rgba(16, 185, 129, 0.015)' },
+          ];
 
       glows.forEach((g) => {
         const gradient = ctx.createRadialGradient(g.x, g.y, 0, g.x, g.y, g.r);
@@ -161,8 +171,8 @@ export default function AIStudioGrid() {
       // Highlight surrounding area under the mouse
       if (mouse.active && mouse.x > 0 && mouse.y > 0) {
         const mouseGlow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 200);
-        mouseGlow.addColorStop(0, 'rgba(0, 210, 255, 0.08)');
-        mouseGlow.addColorStop(0.5, 'rgba(139, 92, 246, 0.03)');
+        mouseGlow.addColorStop(0, isLight ? 'rgba(14, 165, 233, 0.12)' : 'rgba(0, 210, 255, 0.08)');
+        mouseGlow.addColorStop(0.5, isLight ? 'rgba(168, 85, 247, 0.06)' : 'rgba(139, 92, 246, 0.03)');
         mouseGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = mouseGlow;
         ctx.beginPath();
@@ -170,7 +180,7 @@ export default function AIStudioGrid() {
         ctx.fill();
       }
 
-      // Draw basic grid lines with varying alpha depending on mouse proximity
+      // Draw basic grid lines
       const cols = Math.ceil(width / gridSize);
       const rows = Math.ceil(height / gridSize);
 
@@ -181,16 +191,15 @@ export default function AIStudioGrid() {
         ctx.moveTo(x, 0);
         ctx.lineTo(x, height);
         
-        // Dynamic opacity: lines closer to mouse light up slightly more
-        let opacity = 0.04;
+        let opacity = isLight ? 0.08 : 0.04;
         if (mouse.active && mouse.x > 0) {
           const dist = Math.abs(x - mouse.x);
           if (dist < 200) {
-            opacity = 0.04 + (1 - dist / 200) * 0.08;
+            opacity = (isLight ? 0.08 : 0.04) + (1 - dist / 200) * (isLight ? 0.15 : 0.08);
           }
         }
-        ctx.strokeStyle = `rgba(0, 210, 255, ${opacity})`;
-        ctx.lineWidth = 0.6;
+        ctx.strokeStyle = isLight ? `rgba(14, 165, 233, ${opacity})` : `rgba(0, 210, 255, ${opacity})`;
+        ctx.lineWidth = isLight ? 0.8 : 0.6;
         ctx.stroke();
       }
 
@@ -201,16 +210,15 @@ export default function AIStudioGrid() {
         ctx.moveTo(0, y);
         ctx.lineTo(width, y);
 
-        // Dynamic opacity
-        let opacity = 0.04;
+        let opacity = isLight ? 0.08 : 0.04;
         if (mouse.active && mouse.y > 0) {
           const dist = Math.abs(y - mouse.y);
           if (dist < 200) {
-            opacity = 0.04 + (1 - dist / 200) * 0.08;
+            opacity = (isLight ? 0.08 : 0.04) + (1 - dist / 200) * (isLight ? 0.15 : 0.08);
           }
         }
-        ctx.strokeStyle = `rgba(0, 210, 255, ${opacity})`;
-        ctx.lineWidth = 0.6;
+        ctx.strokeStyle = isLight ? `rgba(14, 165, 233, ${opacity})` : `rgba(0, 210, 255, ${opacity})`;
+        ctx.lineWidth = isLight ? 0.8 : 0.6;
         ctx.stroke();
       }
 
@@ -223,7 +231,6 @@ export default function AIStudioGrid() {
       streaks = streaks.filter((s) => {
         s.pos += s.speed;
 
-        // Check if out of bounds
         if (s.type === 'h') {
           if (s.speed > 0 && s.pos - s.length > width) return false;
           if (s.speed < 0 && s.pos + s.length < 0) return false;
@@ -232,7 +239,6 @@ export default function AIStudioGrid() {
           if (s.speed < 0 && s.pos + s.length < 0) return false;
         }
 
-        // Draw streak
         const grad = ctx.createLinearGradient(
           s.type === 'h' ? s.pos - s.length : s.type === 'v' ? s.lineIndex * gridSize : 0,
           s.type === 'v' ? s.pos - s.length : s.type === 'h' ? s.lineIndex * gridSize : 0,
@@ -241,10 +247,10 @@ export default function AIStudioGrid() {
         );
 
         grad.addColorStop(s.speed > 0 ? 0 : 1, 'rgba(0, 0, 0, 0)');
-        grad.addColorStop(s.speed > 0 ? 1 : 0, s.color.replace('0.4', s.alpha.toString()));
+        grad.addColorStop(s.speed > 0 ? 1 : 0, s.color.replace('0.4', s.alpha.toString()).replace('0.5', s.alpha.toString()));
 
         ctx.strokeStyle = grad;
-        ctx.lineWidth = 1.2;
+        ctx.lineWidth = isLight ? 1.5 : 1.2;
         ctx.beginPath();
         if (s.type === 'h') {
           ctx.moveTo(s.pos - s.length, s.lineIndex * gridSize);
@@ -255,7 +261,6 @@ export default function AIStudioGrid() {
         }
         ctx.stroke();
 
-        // Illuminate nodes crossed by the streak
         const currentCell = Math.round(s.pos / gridSize);
         if (currentCell >= 0 && ((s.type === 'h' && currentCell < cols) || (s.type === 'v' && currentCell < rows))) {
           const col = s.type === 'h' ? currentCell : s.lineIndex;
@@ -281,7 +286,6 @@ export default function AIStudioGrid() {
         const mouseCol = Math.round(mouse.x / gridSize);
         const mouseRow = Math.round(mouse.y / gridSize);
         
-        // Check grid nodes within a 2-cell radius
         for (let dc = -2; dc <= 2; dc++) {
           for (let dr = -2; dr <= 2; dr++) {
             const col = mouseCol + dc;
@@ -305,7 +309,7 @@ export default function AIStudioGrid() {
                     intensity,
                     maxIntensity: intensity,
                     decay: 0.02,
-                    color: 'rgba(0, 210, 255, 0.8)',
+                    color: isLight ? 'rgba(14, 165, 233, 0.9)' : 'rgba(0, 210, 255, 0.8)',
                   });
                 }
               }
@@ -314,25 +318,22 @@ export default function AIStudioGrid() {
         }
       }
 
-      // Draw and decay active glowing nodes (intersection points)
+      // Draw active glowing nodes
       activeNodes.forEach((node, key) => {
         const x = node.col * gridSize;
         const y = node.row * gridSize;
 
-        // Draw micro-crosshair or subtle glowing dot
-        ctx.fillStyle = node.color.replace('0.4', node.intensity.toString());
+        ctx.fillStyle = node.color.replace('0.4', node.intensity.toString()).replace('0.5', node.intensity.toString());
         ctx.beginPath();
         ctx.arc(x, y, 2 + node.intensity * 3, 0, Math.PI * 2);
         ctx.fill();
 
-        // Draw outer ring
-        ctx.strokeStyle = node.color.replace('0.4', (node.intensity * 0.4).toString());
+        ctx.strokeStyle = node.color.replace('0.4', (node.intensity * 0.4).toString()).replace('0.5', (node.intensity * 0.4).toString());
         ctx.lineWidth = 0.5;
         ctx.beginPath();
         ctx.arc(x, y, 6 + node.intensity * 10, 0, Math.PI * 2);
         ctx.stroke();
 
-        // Decay node
         if (!mouse.active || Math.sqrt(Math.pow(x - mouse.x, 2) + Math.pow(y - mouse.y, 2)) >= 120) {
           node.intensity -= node.decay;
           if (node.intensity <= 0) {
@@ -354,7 +355,7 @@ export default function AIStudioGrid() {
       }
       resizeObserver.disconnect();
     };
-  }, []);
+  }, [isLight]);
 
   return (
     <div
