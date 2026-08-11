@@ -227,11 +227,11 @@ export default function Hero() {
             <span>Node.js</span>
           </motion.div>
 
-          {/* Animated Main Floating & Tilting Container */}
+         {/* Animated Main Floating Container */}
           <motion.div
             animate={{ y: [-8, 8, -8] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-            className="relative group p-2 flex items-center justify-center perspective-1000"
+            className="relative group p-2 flex items-center justify-center"
           >
             {/* Outer Rotating Cyber Halo Ring */}
             <div className="absolute -inset-4 rounded-full border border-dashed border-cyan-500/40 animate-[spin_20s_linear_infinite] pointer-events-none" />
@@ -245,22 +245,19 @@ export default function Hero() {
             />
             <div className={`absolute inset-1 rounded-full -z-10 ${isLight ? 'bg-white' : 'bg-slate-950'}`} />
             
-            {/* Interactive 3D Card / Circle Container */}
+            {/* Circular Frame Container */}
             <motion.div 
               whileHover={{ 
-                scale: 1.06, 
-                rotateY: 12, 
-                rotateX: -8,
+                scale: 1.05,
                 boxShadow: isLight 
                   ? '0 20px 40px -10px rgba(0,210,255,0.3)' 
                   : '0 20px 50px -10px rgba(0,210,255,0.5)'
               }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-              className={`relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] rounded-full overflow-hidden border-2 transition-colors duration-500 cursor-pointer ${
+              className={`relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] rounded-full overflow-hidden border-2 transition-colors duration-500 ${
                 isLight ? 'border-sky-300 group-hover:border-sky-500 shadow-xl' : 'border-cyan-500/40 group-hover:border-cyan-400 shadow-[0_0_35px_rgba(0,210,255,0.3)]'
               }`}
-              style={{ transformStyle: 'preserve-3d' }}
             >
               <img
                 src={activeHeroImage}
@@ -283,6 +280,17 @@ export default function Hero() {
               <div className={`absolute inset-0 bg-gradient-to-t via-transparent to-transparent opacity-30 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none ${
                 isLight ? 'from-slate-200' : 'from-slate-950'
               }`} />
+            </motion.div>
+
+            {/* Micro Badge / Floating Sparkle indicator */}
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute -top-1 -right-1 z-30 p-2 rounded-full bg-cyan-500 text-black shadow-lg shadow-cyan-500/50 flex items-center justify-center"
+            >
+              <Sparkles className="w-3.5 h-3.5 fill-black" />
+            
+          </motion.div>
             </motion.div>
 
             {/* Micro Badge / Floating Sparkle indicator */}
