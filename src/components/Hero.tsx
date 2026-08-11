@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Mail, ArrowRight, Eye, Terminal, Database, Code, Cpu, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
 import { usePortfolio } from '../context/PortfolioContext';
-import developerPortrait from '../assets/images/mdportfolio.jpeg';
+import developerPortrait from '../assets/images/developer_portrait_1786375098962.jpg';
 import ResumeModal from './ResumeModal';
 
 export default function Hero() {
@@ -13,7 +13,6 @@ export default function Hero() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   const activeHeroImage = heroImage || developerPortrait;
-
   const isLight = theme === 'light';
 
   const roles = [
@@ -172,7 +171,7 @@ export default function Hero() {
 
         </div>
 
-        {/* Right Column - Circular Frame & Portrait Image with Motion Animations */}
+        {/* Right Column - Circular Frame & Portrait Image */}
         <div className="lg:col-span-5 flex justify-center items-center relative mt-8 lg:mt-0">
           
           {/* Background Ambient Glowing Rings */}
@@ -187,7 +186,7 @@ export default function Hero() {
             className="absolute w-[280px] h-[280px] rounded-full bg-purple-500/15 blur-[80px] -z-10" 
           />
           
-          {/* Tech stack floating tags */}
+          {/* Floating Tech Stack Badges */}
           <motion.div 
             animate={{ y: [-5, 5, -5] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
@@ -227,17 +226,17 @@ export default function Hero() {
             <span>Node.js</span>
           </motion.div>
 
-         {/* Animated Main Floating Container */}
+          {/* Floating Container (No Tilt / Rotation) */}
           <motion.div
             animate={{ y: [-8, 8, -8] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
             className="relative group p-2 flex items-center justify-center"
           >
-            {/* Outer Rotating Cyber Halo Ring */}
+            {/* Outer Rotating Cyber Halo Rings */}
             <div className="absolute -inset-4 rounded-full border border-dashed border-cyan-500/40 animate-[spin_20s_linear_infinite] pointer-events-none" />
             <div className="absolute -inset-1.5 rounded-full border border-purple-500/30 animate-[spin_12s_linear_infinite_reverse] pointer-events-none" />
 
-            {/* Glowing Pulsing Gradient Backdrop Ring */}
+            {/* Glowing Backdrop Ring */}
             <motion.div 
               animate={{ rotate: 360 }}
               transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
@@ -264,7 +263,7 @@ export default function Hero() {
                 alt="Syed Mohammed Pasha Quadri Portrait"
                 loading="eager"
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-top group-hover:scale-110 transition-all duration-700 ease-out"
+                className="w-full h-full object-cover object-top group-hover:scale-105 transition-all duration-700 ease-out"
                 id="developer-hero-image"
               />
 
@@ -282,23 +281,11 @@ export default function Hero() {
               }`} />
             </motion.div>
 
-            {/* Micro Badge / Floating Sparkle indicator */}
+            {/* Sparkle Badge */}
             <motion.div
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
               className="absolute -top-1 -right-1 z-30 p-2 rounded-full bg-cyan-500 text-black shadow-lg shadow-cyan-500/50 flex items-center justify-center"
-            >
-              <Sparkles className="w-3.5 h-3.5 fill-black" />
-            
-          </motion.div>
-            </motion.div>
-
-            {/* Micro Badge / Floating Sparkle indicator */}
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute -top-1 -right-1 z-30 p-2 rounded-full bg-cyan-500 text-black shadow-lg shadow-cyan-500/50 flex items-center justify-center"
-              title="Interactive Profile"
             >
               <Sparkles className="w-3.5 h-3.5 fill-black" />
             </motion.div>
