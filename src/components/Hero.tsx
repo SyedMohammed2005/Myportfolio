@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Mail, ArrowRight, Eye, Terminal, Database, Code, Cpu } from 'lucide-react';
+import { Mail, ArrowRight, Eye, Terminal, Database, Code, Cpu, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
 import { usePortfolio } from '../context/PortfolioContext';
 import developerPortrait from '../assets/images/mdportfolio.jpeg';
 import ResumeModal from './ResumeModal';
@@ -171,73 +172,129 @@ export default function Hero() {
 
         </div>
 
-        {/* Right Column - Hexagonal Frame & Portrait Image */}
+        {/* Right Column - Circular Frame & Portrait Image with Motion Animations */}
         <div className="lg:col-span-5 flex justify-center items-center relative mt-8 lg:mt-0">
           
           {/* Background Ambient Glowing Rings */}
-          <div className="absolute w-[320px] h-[320px] rounded-full bg-cyan-500/5 blur-[80px] -z-10 animate-pulse" />
-          <div className="absolute w-[260px] h-[260px] rounded-full bg-purple-500/5 blur-[80px] -z-10 animate-pulse delay-700" />
+          <motion.div 
+            animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute w-[340px] h-[340px] rounded-full bg-cyan-500/15 blur-[80px] -z-10" 
+          />
+          <motion.div 
+            animate={{ scale: [1.1, 1, 1.1], opacity: [0.2, 0.5, 0.2] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+            className="absolute w-[280px] h-[280px] rounded-full bg-purple-500/15 blur-[80px] -z-10" 
+          />
           
           {/* Tech stack floating tags */}
-          <div className={`absolute top-1/4 -left-6 px-3.5 py-2 rounded-xl border font-mono text-xs flex items-center gap-2 shadow-lg transition-all duration-300 select-none animate-float ${
-            isLight
-              ? 'bg-white border-emerald-300 text-emerald-700'
-              : 'bg-slate-950/90 border-emerald-500/30 text-emerald-400'
-          }`}>
-            <Database className="w-3.5 h-3.5" />
+          <motion.div 
+            animate={{ y: [-5, 5, -5] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            className={`absolute top-1/4 -left-6 z-20 px-3.5 py-2 rounded-xl border font-mono text-xs flex items-center gap-2 shadow-lg select-none ${
+              isLight
+                ? 'bg-white/90 backdrop-blur-md border-emerald-300 text-emerald-700'
+                : 'bg-slate-950/90 backdrop-blur-md border-emerald-500/30 text-emerald-400'
+            }`}
+          >
+            <Database className="w-3.5 h-3.5 text-emerald-400" />
             <span>MongoDB</span>
-          </div>
+          </motion.div>
 
-          <div className={`absolute bottom-1/4 -right-4 px-3.5 py-2 rounded-xl border font-mono text-xs flex items-center gap-2 shadow-lg transition-all duration-300 select-none animate-float-delayed ${
-            isLight
-              ? 'bg-white border-sky-300 text-sky-700'
-              : 'bg-slate-950/90 border-cyan-500/30 text-cyan-400'
-          }`}>
-            <Code className="w-3.5 h-3.5" />
+          <motion.div 
+            animate={{ y: [6, -6, 6] }}
+            transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+            className={`absolute bottom-1/4 -right-4 z-20 px-3.5 py-2 rounded-xl border font-mono text-xs flex items-center gap-2 shadow-lg select-none ${
+              isLight
+                ? 'bg-white/90 backdrop-blur-md border-sky-300 text-sky-700'
+                : 'bg-slate-950/90 backdrop-blur-md border-cyan-500/30 text-cyan-400'
+            }`}
+          >
+            <Code className="w-3.5 h-3.5 text-cyan-400" />
             <span>React.js</span>
-          </div>
+          </motion.div>
 
-          <div className={`absolute -bottom-2 left-6 px-3.5 py-2 rounded-xl border font-mono text-xs flex items-center gap-2 shadow-lg transition-all duration-300 select-none animate-float ${
-            isLight
-              ? 'bg-white border-amber-300 text-amber-700'
-              : 'bg-slate-950/90 border-yellow-500/30 text-yellow-500'
-          }`}>
-            <Cpu className="w-3.5 h-3.5" />
+          <motion.div 
+            animate={{ y: [-4, 6, -4] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+            className={`absolute -bottom-2 left-6 z-20 px-3.5 py-2 rounded-xl border font-mono text-xs flex items-center gap-2 shadow-lg select-none ${
+              isLight
+                ? 'bg-white/90 backdrop-blur-md border-amber-300 text-amber-700'
+                : 'bg-slate-950/90 backdrop-blur-md border-yellow-500/30 text-yellow-500'
+            }`}
+          >
+            <Cpu className="w-3.5 h-3.5 text-yellow-400" />
             <span>Node.js</span>
-          </div>
+          </motion.div>
 
-          {/* Hexagonal frame container with glowing borders */}
-          <div className="relative group p-1.5 transition-all duration-500">
-            {/* Double Glowing Borders */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-400 to-purple-500 rounded-2xl opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500 -z-10" />
-            <div className={`absolute inset-0.5 rounded-2xl -z-10 ${isLight ? 'bg-white' : 'bg-slate-950'}`} />
+          {/* Animated Main Floating & Tilting Container */}
+          <motion.div
+            animate={{ y: [-8, 8, -8] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            className="relative group p-2 flex items-center justify-center perspective-1000"
+          >
+            {/* Outer Rotating Cyber Halo Ring */}
+            <div className="absolute -inset-4 rounded-full border border-dashed border-cyan-500/40 animate-[spin_20s_linear_infinite] pointer-events-none" />
+            <div className="absolute -inset-1.5 rounded-full border border-purple-500/30 animate-[spin_12s_linear_infinite_reverse] pointer-events-none" />
+
+            {/* Glowing Pulsing Gradient Backdrop Ring */}
+            <motion.div 
+              animate={{ rotate: 360 }}
+              transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+              className="absolute inset-0 bg-gradient-to-tr from-cyan-400 via-teal-400 to-purple-500 rounded-full opacity-80 blur-md group-hover:opacity-100 group-hover:blur-xl transition-all duration-500 -z-10" 
+            />
+            <div className={`absolute inset-1 rounded-full -z-10 ${isLight ? 'bg-white' : 'bg-slate-950'}`} />
             
-            {/* Image Container */}
-            <div className={`relative w-[280px] sm:w-[320px] aspect-[3/4] rounded-2xl overflow-hidden border transition-colors duration-500 ${
-              isLight ? 'border-sky-300 group-hover:border-sky-500' : 'border-cyan-500/20 group-hover:border-cyan-400/50'
-            }`}>
-              
+            {/* Interactive 3D Card / Circle Container */}
+            <motion.div 
+              whileHover={{ 
+                scale: 1.06, 
+                rotateY: 12, 
+                rotateX: -8,
+                boxShadow: isLight 
+                  ? '0 20px 40px -10px rgba(0,210,255,0.3)' 
+                  : '0 20px 50px -10px rgba(0,210,255,0.5)'
+              }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+              className={`relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] rounded-full overflow-hidden border-2 transition-colors duration-500 cursor-pointer ${
+                isLight ? 'border-sky-300 group-hover:border-sky-500 shadow-xl' : 'border-cyan-500/40 group-hover:border-cyan-400 shadow-[0_0_35px_rgba(0,210,255,0.3)]'
+              }`}
+              style={{ transformStyle: 'preserve-3d' }}
+            >
               <img
                 src={activeHeroImage}
                 alt="Syed Mohammed Pasha Quadri Portrait"
                 loading="eager"
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out"
+                className="w-full h-full object-cover object-top group-hover:scale-110 transition-all duration-700 ease-out"
                 id="developer-hero-image"
               />
 
-              {/* Overlay */}
-              <div className={`absolute inset-0 bg-gradient-to-t via-transparent to-transparent opacity-40 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none ${
+              {/* Shimmer / Light Sweep Effect on Hover */}
+              <motion.div
+                initial={{ x: '-100%', opacity: 0 }}
+                whileHover={{ x: '200%', opacity: [0, 0.6, 0] }}
+                transition={{ duration: 1.2, ease: 'easeInOut' }}
+                className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 pointer-events-none"
+              />
+
+              {/* Ambient Gradient Overlay */}
+              <div className={`absolute inset-0 bg-gradient-to-t via-transparent to-transparent opacity-30 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none ${
                 isLight ? 'from-slate-200' : 'from-slate-950'
               }`} />
-            </div>
-            
-            {/* Micro Decorative corners */}
-            <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400" />
-            <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400" />
-            <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400" />
-            <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-400" />
-          </div>
+            </motion.div>
+
+            {/* Micro Badge / Floating Sparkle indicator */}
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute -top-1 -right-1 z-30 p-2 rounded-full bg-cyan-500 text-black shadow-lg shadow-cyan-500/50 flex items-center justify-center"
+              title="Interactive Profile"
+            >
+              <Sparkles className="w-3.5 h-3.5 fill-black" />
+            </motion.div>
+          </motion.div>
 
         </div>
 
@@ -246,4 +303,3 @@ export default function Hero() {
     </section>
   );
 }
-
