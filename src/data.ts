@@ -11,7 +11,7 @@ export const portfolioData = {
     title: 'MERN Stack Developer',
     subtitle: 'Building Intelligent Full-Stack Web Applications',
     email: 'syedmdpashaquadri2005@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/syed-mohammed-pasha-quadri-0a56202b4', // Real link based on name
+    linkedin: 'https://www.linkedin.com/in/syed-mohammed-pasha-quadri-264530397/', // Real link based on name
     github: 'https://github.com/SyedMohammed2005', // Matching user requested Github link
     bio: 'An ambitious and detail-oriented MERN Stack Developer specializing in crafting high-performance full-stack web applications, responsive user interfaces, and intelligent AI integrations. Deeply passionate about clean code, modular software architecture, and modern UX design.',
     location: 'Hyderabad, India',
