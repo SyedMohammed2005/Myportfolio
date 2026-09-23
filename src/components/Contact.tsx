@@ -188,7 +188,7 @@ export default function Contact() {
                     }`}
                     id="contact-linkedin-link"
                   >
-                    linkedin.com/in/syed-mohammed-pasha-quadri
+                   https://www.linkedin.com/in/syed-mohammed-pasha-quadri-264530397/
                   </a>
                 </div>
               </div>
