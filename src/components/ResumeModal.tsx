@@ -253,7 +253,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                     {/* Social Profile Links */}
                     <div className="flex flex-wrap justify-center items-center gap-x-2 sm:gap-x-3 gap-y-1 text-xs text-blue-700 dark:text-cyan-400 font-sans pt-0.5">
                       <a
-                        href="https://www.linkedin.com/in/syed-mohammed-pasha-quadri-0a56202b4"
+                        href="https://www.linkedin.com/in/syed-mohammed-pasha-quadri-264530397/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:underline"
