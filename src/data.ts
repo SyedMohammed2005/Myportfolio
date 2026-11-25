@@ -5,10 +5,7 @@ import spotifyImg from './assets/images/spotify_project_mockup_1783264783783.jpg
 import netflixImg from './assets/images/netflix_project_mockup_1783264753373.jpg';
 import amazonImg from './assets/images/amazon_project_mockup_1783264766889.jpg';
 import codejImg from './assets/images/codej_project_mockup.svg';
-// Top imports
 import resumeiqImg from './assets/images/resumeiq_project_mockup.svg';
-
-
 
 export const portfolioData = {
   personalInfo: {
@@ -86,7 +83,7 @@ export const portfolioData = {
       title: 'ResumeIQ (AI Resume Builder)',
       description: 'An AI-powered resume builder and ATS analyzer where you create your Master Profile once to generate job-specific, ATS-optimized, one-page PDF resumes with custom templates.',
       longDescription: 'ResumeIQ streamlines job applications by eliminating repetitive manual resume edits. Built with React, TypeScript, Tailwind CSS, and the Gemini API, it lets you build a verified Master Profile once and generate tailored resumes for any job description. Features include AI-powered ATS analysis and scoring, job-specific keyword optimization, AI custom template uploads, mobile-friendly editing, application tracking, and instant one-page selectable A4 PDF exports.',
-      image: '/assets/aistudio/WhatsApp_Image_2026-11-17_at_9.36.45_AM_527a6a5e.jpeg',
+      image: resumeiqImg,
       tags: ['React', 'TypeScript', 'Tailwind CSS', 'Gemini AI', 'ATS Scoring', 'PDF Export'],
       liveUrl: 'https://resume-iq-psi-sable.vercel.app/',
       githubUrl: 'https://github.com/SyedMohammed2005',
