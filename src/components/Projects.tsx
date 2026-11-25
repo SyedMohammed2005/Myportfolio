@@ -1,8 +1,220 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ExternalLink, Github, Code, Sparkles, FolderGit2, X, Check, Search, SlidersHorizontal, Filter } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { Project } from '../types';
+
+interface ProjectCardItemProps {
+  key?: string | number;
+  project: Project;
+  isLight: boolean;
+  onSelectProject: (project: Project) => void;
+  getCategoryColor: (category: string) => string;
+}
+
+function ProjectCardItem({ project, isLight, onSelectProject, getCategoryColor }: ProjectCardItemProps) {
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
+  const [glarePos, setGlarePos] = useState({ x: 50, y: 50 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget.getBoundingClientRect();
+    const cardWidth = card.width;
+    const cardHeight = card.height;
+    const mouseX = e.clientX - card.left;
+    const mouseY = e.clientY - card.top;
+
+    // Calculate rotation angles (-8 to +8 degrees)
+    const rX = ((mouseY - cardHeight / 2) / (cardHeight / 2)) * -8;
+    const rY = ((mouseX - cardWidth / 2) / (cardWidth / 2)) * 8;
+
+    setRotateX(rX);
+    setRotateY(rY);
+    setGlarePos({
+      x: Math.round((mouseX / cardWidth) * 100),
+      y: Math.round((mouseY / cardHeight) * 100),
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setRotateX(0);
+    setRotateY(0);
+  };
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.92 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.92 }}
+      whileHover={{ scale: 1.035, y: -6 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+      style={{ perspective: 1000 }}
+      className="h-full"
+    >
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        animate={{
+          rotateX: rotateX,
+          rotateY: rotateY,
+        }}
+        transition={{ type: 'spring', stiffness: 280, damping: 20, mass: 0.5 }}
+        style={{ transformStyle: 'preserve-3d' }}
+        className={`group relative h-full rounded-2xl border transition-colors duration-500 flex flex-col justify-between overflow-hidden shadow-md ${
+          isLight
+            ? 'bg-white border-slate-200 hover:border-cyan-500/80 hover:shadow-2xl hover:shadow-cyan-500/15'
+            : 'bg-[#09090e]/90 border-slate-800/80 hover:border-cyan-500/50 hover:shadow-[0_20px_45px_-15px_rgba(0,210,255,0.25)]'
+        }`}
+        id={`project-card-${project.id}`}
+      >
+        {/* Cursor tracking 3D Glare Sheen Overlay */}
+        <div
+          className="pointer-events-none absolute inset-0 transition-opacity duration-300 rounded-2xl opacity-0 group-hover:opacity-100 z-30"
+          style={{
+            background: `radial-gradient(500px circle at ${glarePos.x}% ${glarePos.y}%, ${
+              isLight ? 'rgba(0, 210, 255, 0.12)' : 'rgba(0, 210, 255, 0.18)'
+            }, transparent 50%)`,
+          }}
+        />
+
+        {/* Card Image with Subtle Zoom-in Animation and 3D Flip Overlay */}
+        <div className="relative aspect-[16/10] [perspective:1000px] border-b border-slate-200 dark:border-slate-900 overflow-hidden">
+          <div className="w-full h-full relative transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+            
+            {/* Front Side: Rich Mockup Visual with Zoom Effect */}
+            <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] z-10 overflow-hidden">
+              <img
+                src={project.image}
+                alt={project.title}
+                loading="lazy"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-110"
+              />
+              
+              {/* Visual overlay with gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-t opacity-85 ${
+                isLight ? 'from-slate-900/60 via-transparent to-transparent' : 'from-slate-950 via-slate-950/20 to-transparent'
+              }`} />
+              
+              {/* Category Badge */}
+              <span className={`absolute top-4 left-4 px-2.5 py-1 text-[10px] font-mono font-bold uppercase rounded-md border tracking-wider z-20 ${getCategoryColor(project.category)}`}>
+                {project.category}
+              </span>
+
+              {/* Interactive Flip Hint */}
+              <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded bg-black/75 border border-slate-800 text-[9px] font-mono font-medium text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                <Sparkles className="w-2.5 h-2.5 text-cyan-400 animate-pulse" />
+                <span>Hover to Flip Spec</span>
+              </div>
+            </div>
+
+            {/* Back Side: Cyber Spec sheet & Console Log */}
+            <div className={`absolute inset-0 w-full h-full p-5 flex flex-col justify-between [backface-visibility:hidden] [transform:rotateY(180deg)] z-0 border ${
+              isLight ? 'bg-slate-900 text-slate-100 border-sky-400' : 'bg-[#050508] border-cyan-500/20'
+            }`}>
+              <div className="relative z-10 space-y-3 font-mono">
+                <div className="flex justify-between items-center text-[10px] text-cyan-400 border-b border-cyan-500/20 pb-2">
+                  <span className="font-bold tracking-widest uppercase">System Stats</span>
+                  <span className="animate-pulse text-emerald-400 font-bold flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    VERIFIED
+                  </span>
+                </div>
+                
+                <div className="space-y-1.5 text-left text-[10px] text-slate-300">
+                  <p className="line-clamp-1"><span className="text-purple-400 font-semibold"># STACK:</span> {project.tags.join(', ')}</p>
+                  <p><span className="text-cyan-400 font-semibold"># TYPE:</span> {project.category.toUpperCase()} COMPILATION</p>
+                  <p><span className="text-yellow-400 font-semibold"># ENGINE:</span> VITE + REACT V18</p>
+                  <p className="line-clamp-1"><span className="text-emerald-400 font-semibold"># REPO:</span> {(project.githubUrl || 'https://github.com/SyedMohammed2005').replace('https://github.com/', '')}</p>
+                </div>
+              </div>
+
+              <div className="relative z-10 flex items-center gap-2 p-2 rounded bg-cyan-950/40 border border-cyan-500/20 text-cyan-300 text-[9px] font-mono leading-tight text-left">
+                <Code className="w-3 h-3 flex-shrink-0 text-cyan-400" />
+                <span>MERN Architecture compiled. Click Demo to test real integration.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Card Content */}
+        <div className="p-6 flex flex-col justify-between flex-grow space-y-4 relative z-20">
+          <div className="space-y-2">
+            <h3 className={`text-lg font-display font-bold transition-colors duration-300 ${
+              isLight ? 'text-slate-900 group-hover:text-cyan-600' : 'text-white group-hover:text-cyan-400'
+            }`}>
+              {project.title}
+            </h3>
+            <p className={`text-xs sm:text-sm font-sans line-clamp-3 leading-relaxed ${
+              isLight ? 'text-slate-600' : 'text-slate-400'
+            }`}>
+              {project.description}
+            </p>
+          </div>
+
+          {/* Tech tags list */}
+          <div className="flex flex-wrap gap-1.5 pt-2">
+            {project.tags.map((tag) => (
+              <span key={tag} className={`px-2 py-0.5 text-[10px] font-mono rounded border ${
+                isLight
+                  ? 'bg-slate-100 border-slate-300 text-slate-700'
+                  : 'bg-slate-900 border-slate-800/60 text-slate-400'
+              }`}>
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Card Action Buttons */}
+          <div className={`pt-4 border-t flex items-center justify-between gap-3 ${
+            isLight ? 'border-slate-200' : 'border-slate-900/60'
+          }`}>
+            <button
+              onClick={() => onSelectProject(project)}
+              className={`text-xs font-mono flex items-center gap-1 cursor-pointer font-semibold ${
+                isLight ? 'text-cyan-700 hover:text-slate-900' : 'text-cyan-400 hover:text-white'
+              }`}
+              id={`project-details-${project.id}`}
+            >
+              <Code className="w-3.5 h-3.5" />
+              <span>Deep-dive Code</span>
+            </button>
+
+            <div className="flex items-center gap-2">
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`p-2 rounded-lg border transition-all duration-200 cursor-pointer ${
+                  isLight
+                    ? 'bg-slate-100 border-slate-300 text-slate-700 hover:text-black hover:border-slate-400'
+                    : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                }`}
+                title="View GitHub Repository"
+                id={`project-github-link-${project.id}`}
+              >
+                <Github className="w-4 h-4" />
+              </a>
+              
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3.5 py-2 rounded-lg bg-cyan-400 text-black font-display text-[11px] font-bold uppercase tracking-wider hover:bg-cyan-300 active:scale-95 transition-all duration-200 flex items-center gap-1 cursor-pointer shadow-sm"
+                id={`project-live-link-${project.id}`}
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span>Demo</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default function Projects() {
   const { projects, theme } = usePortfolio();
@@ -91,6 +303,20 @@ export default function Projects() {
           'Subtotal calculators reacting instantly to checkout steps.',
           'Custom star ratings and keyword filters in product search bars.',
           'Optimized e-commerce responsive item listing cards.',
+        ];
+      case 6: // CodeJ
+        return [
+          'GitHub Integration: Push Java DSA code directly to repositories from the browser.',
+          'Gemini AI Tutor: Real-time code analysis, debugging, and logic breakdown.',
+          'Algorithms Engine: Custom Big-O complexity calculation and execution visualization.',
+          'Balanced Java IDE: Syntax-highlighted editor with browser compiler and stdin support.',
+        ];
+      case 7: // ResumeIQ
+        return [
+          'AI-powered ATS analysis, keyword gap detection, and transparent scoring.',
+          'Master Profile workflow to generate job-specific tailored resumes with AI.',
+          'AI-powered custom template upload and one-page selectable A4 PDF generation.',
+          'Mobile-friendly resume editor with instant preview, download, and tracker.',
         ];
       default:
         return ['High performance responsive layout', 'Clean modular code structure', 'Advanced CSS styling'];
@@ -270,154 +496,13 @@ export default function Projects() {
           <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project) => (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, scale: 0.92 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.92 }}
-                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                <ProjectCardItem
                   key={project.id}
-                  className={`group rounded-2xl border transition-all duration-500 hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden shadow-md ${
-                    isLight
-                      ? 'bg-white border-slate-200 hover:border-black hover:shadow-xl'
-                      : 'bg-[#09090e]/80 border-slate-800/80 hover:border-cyan-500/40 shadow-[0_15px_30px_-15px_rgba(0,0,0,0.5)]'
-                  }`}
-                  id={`project-card-${project.id}`}
-                >
-                  {/* Card Image and Interactive 3D Flip Overlay */}
-                  <div className="relative aspect-[16/10] [perspective:1000px] border-b border-slate-200 dark:border-slate-900 overflow-hidden">
-                    <div className="w-full h-full relative transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                      
-                      {/* Front Side: Rich Mockup Visual */}
-                      <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] z-10">
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          loading="lazy"
-                          referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover"
-                        />
-                        
-                        {/* Visual overlay with gradient */}
-                        <div className={`absolute inset-0 bg-gradient-to-t opacity-85 ${
-                          isLight ? 'from-slate-900/60 via-transparent to-transparent' : 'from-slate-950 via-slate-950/20 to-transparent'
-                        }`} />
-                        
-                        {/* Category Badge */}
-                        <span className={`absolute top-4 left-4 px-2.5 py-1 text-[10px] font-mono font-bold uppercase rounded-md border tracking-wider ${getCategoryColor(project.category)}`}>
-                          {project.category}
-                        </span>
-
-                        {/* Interactive Flip Hint */}
-                        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded bg-black/75 border border-slate-800 text-[9px] font-mono font-medium text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <Sparkles className="w-2.5 h-2.5 text-cyan-400 animate-pulse" />
-                          <span>Hover to Flip Spec</span>
-                        </div>
-                      </div>
-
-                      {/* Back Side: Cyber Spec sheet & Console Log */}
-                      <div className={`absolute inset-0 w-full h-full p-5 flex flex-col justify-between [backface-visibility:hidden] [transform:rotateY(180deg)] z-0 border ${
-                        isLight ? 'bg-slate-900 text-slate-100 border-sky-400' : 'bg-[#050508] border-cyan-500/20'
-                      }`}>
-                        <div className="relative z-10 space-y-3 font-mono">
-                          <div className="flex justify-between items-center text-[10px] text-cyan-400 border-b border-cyan-500/20 pb-2">
-                            <span className="font-bold tracking-widest uppercase">System Stats</span>
-                            <span className="animate-pulse text-emerald-400 font-bold flex items-center gap-1">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                              VERIFIED
-                            </span>
-                          </div>
-                          
-                          <div className="space-y-1.5 text-left text-[10px] text-slate-300">
-                            <p className="line-clamp-1"><span className="text-purple-400 font-semibold"># STACK:</span> {project.tags.join(', ')}</p>
-                            <p><span className="text-cyan-400 font-semibold"># TYPE:</span> {project.category.toUpperCase()} COMPILATION</p>
-                            <p><span className="text-yellow-400 font-semibold"># ENGINE:</span> VITE + REACT V18</p>
-                            <p className="line-clamp-1"><span className="text-emerald-400 font-semibold"># REPO:</span> {project.githubUrl.replace('https://github.com/', '')}</p>
-                          </div>
-                        </div>
-
-                        <div className="relative z-10 flex items-center gap-2 p-2 rounded bg-cyan-950/40 border border-cyan-500/20 text-cyan-300 text-[9px] font-mono leading-tight text-left">
-                          <Code className="w-3 h-3 flex-shrink-0 text-cyan-400" />
-                          <span>MERN Architecture compiled. Click Demo to test real integration.</span>
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="p-6 flex flex-col justify-between flex-grow space-y-4">
-                    <div className="space-y-2">
-                      <h3 className={`text-lg font-display font-bold transition-colors duration-300 ${
-                        isLight ? 'text-slate-900 group-hover:text-cyan-600' : 'text-white group-hover:text-cyan-400'
-                      }`}>
-                        {project.title}
-                      </h3>
-                      <p className={`text-xs sm:text-sm font-sans line-clamp-3 leading-relaxed ${
-                        isLight ? 'text-slate-600' : 'text-slate-400'
-                      }`}>
-                        {project.description}
-                      </p>
-                    </div>
-
-                    {/* Tech tags list */}
-                    <div className="flex flex-wrap gap-1.5 pt-2">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className={`px-2 py-0.5 text-[10px] font-mono rounded border ${
-                          isLight
-                            ? 'bg-slate-100 border-slate-300 text-slate-700'
-                            : 'bg-slate-900 border-slate-800/60 text-slate-400'
-                        }`}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Card Action Buttons */}
-                    <div className={`pt-4 border-t flex items-center justify-between gap-3 ${
-                      isLight ? 'border-slate-200' : 'border-slate-900/60'
-                    }`}>
-                      <button
-                        onClick={() => setSelectedProject(project)}
-                        className={`text-xs font-mono flex items-center gap-1 cursor-pointer font-semibold ${
-                          isLight ? 'text-cyan-700 hover:text-slate-900' : 'text-cyan-400 hover:text-white'
-                        }`}
-                        id={`project-details-${project.id}`}
-                      >
-                        <Code className="w-3.5 h-3.5" />
-                        <span>Deep-dive Code</span>
-                      </button>
-
-                      <div className="flex items-center gap-2">
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`p-2 rounded-lg border transition-all duration-200 cursor-pointer ${
-                            isLight
-                              ? 'bg-slate-100 border-slate-300 text-slate-700 hover:text-black hover:border-slate-400'
-                              : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
-                          }`}
-                          title="View GitHub Repository"
-                          id={`project-github-link-${project.id}`}
-                        >
-                          <Github className="w-4 h-4" />
-                        </a>
-                        
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-3.5 py-2 rounded-lg bg-cyan-400 text-black font-display text-[11px] font-bold uppercase tracking-wider hover:bg-cyan-300 active:scale-95 transition-all duration-200 flex items-center gap-1 cursor-pointer shadow-sm"
-                          id={`project-live-link-${project.id}`}
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          <span>Demo</span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
+                  project={project}
+                  isLight={isLight}
+                  onSelectProject={setSelectedProject}
+                  getCategoryColor={getCategoryColor}
+                />
               ))}
             </AnimatePresence>
           </motion.div>
@@ -425,9 +510,15 @@ export default function Projects() {
 
         {/* Project Detailed Deep-Dive Modal */}
         {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div
+            data-scroll-prevent
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setSelectedProject(null);
+            }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto bg-slate-950/80 backdrop-blur-md"
+          >
             <div
-              className={`relative w-full max-w-2xl border rounded-2xl shadow-2xl overflow-hidden animate-fade-in ${
+              className={`relative w-full max-w-2xl max-h-[90vh] overflow-y-auto border rounded-2xl shadow-2xl animate-fade-in my-auto ${
                 isLight ? 'bg-white border-slate-300' : 'bg-[#09090f] border-cyan-500/20'
               }`}
               id="project-detail-modal"
@@ -438,7 +529,7 @@ export default function Projects() {
                   src={selectedProject.image}
                   alt={selectedProject.title}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
                 <button
@@ -551,4 +642,3 @@ export default function Projects() {
     </section>
   );
 }
-
