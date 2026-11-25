@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" width="960" height="600">
+  <defs>
+    <linearGradient id="rqBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="60%" stop-color="#eff6ff"/>
+      <stop offset="100%" stop-color="#e0e7ff"/>
+    </linearGradient>
+    <linearGradient id="rqBlue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="rqGreen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <filter id="rqShadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Canvas -->
+  <rect width="960" height="600" fill="url(#rqBg)"/>
+  <circle cx="850" cy="90" r="150" fill="#3b82f6" opacity="0.10"/>
+  <circle cx="110" cy="520" r="140" fill="#6366f1" opacity="0.10"/>
+
+  <!-- Main App Shell -->
+  <rect x="44" y="34" width="872" height="532" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" filter="url(#rqShadow)"/>
+
+  <!-- Top Navbar -->
+  <rect x="44" y="34" width="872" height="52" rx="18" fill="#ffffff"/>
+  <rect x="44" y="68" width="872" height="18" fill="#ffffff"/>
+  <line x1="44" y1="86" x2="916" y2="86" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Brand -->
+  <rect x="68" y="47" width="26" height="26" rx="7" fill="url(#rqBlue)"/>
+  <text x="76" y="65" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="800" fill="#ffffff">R</text>
+  <text x="104" y="65" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="800" fill="#0f172a">ResumeIQ</text>
+  <rect x="188" y="49" width="78" height="22" rx="6" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="200" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600" fill="#1d4ed8">Dashboard</text>
+
+  <!-- Navbar CTA -->
+  <rect x="812" y="46" width="82" height="28" rx="8" fill="url(#rqBlue)"/>
+  <text x="829" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">+ Create</text>
+
+  <!-- Hero Card -->
+  <rect x="68" y="102" width="538" height="164" rx="14" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="88" y="128" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" fill="#2563eb">One Profile. Unlimited Resumes. More Relevant Applications.</text>
+  <text x="88" y="160" font-family="ui-sans-serif, system-ui, sans-serif" font-size="25" font-weight="800" fill="#0f172a">Your Career, Optimized.</text>
+  <text x="88" y="185" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12.5" fill="#475569">Build your verified Master Profile once, match it against any job</text>
+  <text x="88" y="203" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12.5" fill="#475569">description with transparent ATS scoring, and export A4 PDFs.</text>
+
+  <rect x="88" y="220" width="136" height="32" rx="8" fill="url(#rqBlue)"/>
+  <text x="110" y="240" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">Create Resume</text>
+
+  <rect x="236" y="220" width="168" height="32" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="252" y="240" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="600" fill="#1e293b">Analyze Existing Resume</text>
+
+  <!-- Right Side Card: Master Profile & ATS Score -->
+  <rect x="622" y="102" width="270" height="164" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="642" y="128" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#475569">Master Profile Completion</text>
+  <text x="642" y="160" font-family="ui-sans-serif, system-ui, sans-serif" font-size="28" font-weight="800" fill="#0f172a">85%</text>
+  <rect x="720" y="138" width="94" height="22" rx="11" fill="#ecfdf5" stroke="#a7f3d0"/>
+  <text x="734" y="153" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" fill="#059669">ATS 92/100</text>
+  <rect x="642" y="176" width="230" height="8" rx="4" fill="#e2e8f0"/>
+  <rect x="642" y="176" width="196" height="8" rx="4" fill="url(#rqBlue)"/>
+
+  <line x1="642" y1="202" x2="872" y2="202" stroke="#f1f5f9" stroke-width="1.5"/>
+  <text x="642" y="224" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11.5" font-weight="600" fill="#334155">Saved Resumes: 4 Tailored</text>
+  <text x="642" y="246" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11.5" font-weight="600" fill="#334155">Applications Tracked: 6 Active</text>
+
+  <!-- 3 Quick Steps Section -->
+  <rect x="68" y="282" width="824" height="128" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="88" y="308" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13.5" font-weight="800" fill="#0f172a">Get started in 3 quick steps</text>
+
+  <!-- Step 1 -->
+  <rect x="88" y="322" width="248" height="72" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+  <circle cx="110" cy="346" r="10" fill="#dcfce7"/>
+  <text x="106" y="350" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="800" fill="#16a34a">1</text>
+  <text x="128" y="350" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Complete Master Profile</text>
+  <text x="100" y="372" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" fill="#64748b">Import PDF/DOCX or enter skills once.</text>
+
+  <!-- Step 2 -->
+  <rect x="356" y="322" width="248" height="72" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+  <circle cx="378" cy="346" r="10" fill="#dbeafe"/>
+  <text x="374" y="350" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="800" fill="#2563eb">2</text>
+  <text x="396" y="350" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Tailor to Job Description</text>
+  <text x="368" y="372" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" fill="#64748b">Match verified experience to the role.</text>
+
+  <!-- Step 3 -->
+  <rect x="624" y="322" width="248" height="72" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+  <circle cx="646" cy="346" r="10" fill="#e0e7ff"/>
+  <text x="642" y="350" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="800" fill="#4f46e5">3</text>
+  <text x="664" y="350" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Verify ATS &amp; Export PDF</text>
+  <text x="636" y="372" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" fill="#64748b">Optimize keywords &amp; export A4 PDF.</text>
+
+  <!-- Bottom Split: A4 PDF Preview & Job Tracker -->
+  <rect x="68" y="426" width="460" height="122" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="88" y="452" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="800" fill="#0f172a">AI Custom Templates &amp; One-Page A4 Export</text>
+  <rect x="88" y="468" width="110" height="62" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+  <rect x="98" y="478" width="60" height="6" rx="3" fill="#1d4ed8"/>
+  <rect x="98" y="490" width="90" height="4" rx="2" fill="#94a3b8"/>
+  <rect x="98" y="500" width="76" height="4" rx="2" fill="#cbd5e1"/>
+  <rect x="98" y="510" width="84" height="4" rx="2" fill="#cbd5e1"/>
+
+  <text x="216" y="484" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#0f172a">Keyword Match Score</text>
+  <rect x="216" y="494" width="286" height="8" rx="4" fill="#e2e8f0"/>
+  <rect x="216" y="494" width="256" height="8" rx="4" fill="url(#rqGreen)"/>
+  <text x="216" y="522" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#475569">React • TypeScript • Gemini AI • Selectable Text PDF</text>
+
+  <!-- Job Applications Tracker -->
+  <rect x="544" y="426" width="348" height="122" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="564" y="452" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="800" fill="#0f172a">Job Applications Tracker</text>
+  <rect x="564" y="468" width="96" height="60" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="578" y="490" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b">Preparing</text>
+  <text x="578" y="514" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="800" fill="#0f172a">2</text>
+
+  <rect x="670" y="468" width="96" height="60" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="684" y="490" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#1d4ed8">Applied</text>
+  <text x="684" y="514" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="800" fill="#1d4ed8">3</text>
+
+  <rect x="776" y="468" width="96" height="60" rx="8" fill="#ecfdf5" stroke="#a7f3d0"/>
+  <text x="790" y="490" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#059669">Interview</text>
+  <text x="790" y="514" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="800" fill="#059669">1</text>
+</svg>
