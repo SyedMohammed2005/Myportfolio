@@ -31,8 +31,8 @@ interface PortfolioContextType {
 
 const PortfolioContext = createContext<PortfolioContextType | undefined>(undefined);
 
-const LOCAL_STORAGE_PROJECTS_KEY = 'smpq_portfolio_projects_v3';
-const LEGACY_PROJECTS_KEY = 'smpq_portfolio_projects_v2';
+const LOCAL_STORAGE_PROJECTS_KEY = 'smpq_portfolio_projects_v4';
+const LEGACY_PROJECTS_KEY = 'smpq_portfolio_projects_v3';
 const LOCAL_STORAGE_SKILLS_KEY = 'smpq_portfolio_skills_v4';
 const LOCAL_STORAGE_THEME_KEY = 'smpq_portfolio_theme_v2';
 const LOCAL_STORAGE_RESUME_KEY = 'smpq_portfolio_resume_v2';
@@ -61,7 +61,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         if (Array.isArray(legacyParsed)) {
           const initialIds = new Set(initialData.projects.map((p) => p.id));
           const customProjects = legacyParsed.filter(
-            (p: Project) => !initialIds.has(p.id) && p.id > 5
+            (p: Project) => !initialIds.has(p.id) && p.id > 7
           );
           return [...initialData.projects, ...customProjects];
         }
