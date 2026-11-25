@@ -5,6 +5,10 @@ import spotifyImg from './assets/images/spotify_project_mockup_1783264783783.jpg
 import netflixImg from './assets/images/netflix_project_mockup_1783264753373.jpg';
 import amazonImg from './assets/images/amazon_project_mockup_1783264766889.jpg';
 import codejImg from './assets/images/codej_project_mockup.svg';
+// Top imports
+import resumeiqImg from './assets/images/resumeiq_project_mockup.svg';
+
+
 
 export const portfolioData = {
   personalInfo: {
