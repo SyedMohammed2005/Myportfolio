@@ -31,8 +31,9 @@ interface PortfolioContextType {
 
 const PortfolioContext = createContext<PortfolioContextType | undefined>(undefined);
 
-const LOCAL_STORAGE_PROJECTS_KEY = 'smpq_portfolio_projects_v2';
-const LOCAL_STORAGE_SKILLS_KEY = 'smpq_portfolio_skills_v2';
+const LOCAL_STORAGE_PROJECTS_KEY = 'smpq_portfolio_projects_v3';
+const LEGACY_PROJECTS_KEY = 'smpq_portfolio_projects_v2';
+const LOCAL_STORAGE_SKILLS_KEY = 'smpq_portfolio_skills_v4';
 const LOCAL_STORAGE_THEME_KEY = 'smpq_portfolio_theme_v2';
 const LOCAL_STORAGE_RESUME_KEY = 'smpq_portfolio_resume_v2';
 const LOCAL_STORAGE_HERO_IMAGE_KEY = 'smpq_portfolio_hero_image_v2';
@@ -52,6 +53,17 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
           return parsed;
+        }
+      }
+      const legacySaved = localStorage.getItem(LEGACY_PROJECTS_KEY);
+      if (legacySaved) {
+        const legacyParsed = JSON.parse(legacySaved);
+        if (Array.isArray(legacyParsed)) {
+          const initialIds = new Set(initialData.projects.map((p) => p.id));
+          const customProjects = legacyParsed.filter(
+            (p: Project) => !initialIds.has(p.id) && p.id > 5
+          );
+          return [...initialData.projects, ...customProjects];
         }
       }
     } catch (e) {
